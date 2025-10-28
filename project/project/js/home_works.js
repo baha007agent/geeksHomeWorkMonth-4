@@ -14,17 +14,56 @@ gmailButton.addEventListener("click", () => {
   }
 })
 
+const parentBlock = document.querySelector(".parent_block")
 const childBlock = document.querySelector(".child_block")
 
-let num = 0;
+const width = parentBlock.clientWidth - childBlock.offsetWidth
+const height = parentBlock.clientHeight - childBlock.offsetWidth
 
-function count() {
-  if (num <= 449) {
-    childBlock.style.left = `${num}px`;
-  }
-  num++;
-  requestAnimationFrame(count);
+let positionX = 0;
+let positionY = 0;
+
+const moveBlock = () => {
+
+  if (positionX < width && positionY === 0) positionX++;
+  else if (positionX >= width && positionY < height) positionY++;
+  else if (positionY >= height && positionX > 0) positionX--;
+  else if (positionX === 0 && positionY > 0) positionY--;
+
+  childBlock.style.left = `${positionX}px`;
+  childBlock.style.top = `${positionY}px`;
+  childBlock.style.left = `${positionX}px`;
+  childBlock.style.top = `${positionY}px`;
+
+  requestAnimationFrame(moveBlock)
 }
 
-count();
+moveBlock();
 
+// --------------------------------------home work number 2------------------------------------------------
+
+const seconds = document.querySelector("#seconds")
+const start = document.querySelector("#start")
+const stop = document.querySelector("#stop")
+const reset = document.querySelector("#reset")
+
+let num = 0
+let interval
+
+start.onclick = () => {
+  clearInterval(interval)
+  interval = setInterval(() => {
+    num++
+    seconds.innerText = num
+  }, 100);
+}
+
+stop.onclick = () => {
+  clearInterval(interval)
+}
+console.log(seconds.innerText);
+
+reset.onclick = () => {
+  seconds.innerText = 0
+  num = 0
+}
