@@ -48,7 +48,7 @@ const stop = document.querySelector("#stop")
 const reset = document.querySelector("#reset")
 
 let num = 0
-let interval
+let interval = null
 
 start.onclick = () => {
   clearInterval(interval)
