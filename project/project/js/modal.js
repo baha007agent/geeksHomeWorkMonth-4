@@ -8,7 +8,7 @@ const openModal = () => {
 
 setInterval(() => {
   openModal()
-}, 10000);
+}, 20000);
 
 const closeModal = () => {
   modal.style.display = "none"

@@ -61,9 +61,47 @@ start.onclick = () => {
 stop.onclick = () => {
   clearInterval(interval)
 }
-console.log(seconds.innerText);
 
 reset.onclick = () => {
   seconds.innerText = 0
   num = 0
+}
+
+// ------------------------- home work number 4.1 ---------------------------------------------
+
+const charactersList = document.querySelector(".characters-list")
+
+const xhr = new XMLHttpRequest()
+xhr.open("GET", "../data/characters.json")
+xhr.send()
+
+xhr.onload = () => {
+  if (xhr.status === 200 || xhr.status === 304) {
+    const data = JSON.parse(xhr.response)
+
+    data.forEach((character) => {
+      charactersList.innerHTML += `
+    <img src="${character.photo}" alt=""/>
+      <h1>${character.name}</h1>
+      <h4>${character.age}</h4>
+    `
+    })
+  } else {
+    console.log("Ошибка", xhr.status);
+  }
+}
+
+// ------------------------- home work number 4.2 ---------------------------------------------
+
+const xhrBio = new XMLHttpRequest()
+xhrBio.open("GET", "../data/bio.json")
+xhrBio.send()
+
+xhrBio.onload = () => {
+  if (xhrBio.status === 200 || xhrBio.status === 304) {
+    const data = JSON.parse(xhrBio.response)
+    console.log(data);
+  } else {
+    console.log("Ошибка", xhr.status);
+  }
 }

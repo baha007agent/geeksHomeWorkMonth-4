@@ -1,17 +1,17 @@
 [
   {
-    "name": "",
-    "age": 0,
-    "photo": "url"
+    "name": " Wolverine",
+    "age": 34,
+    "photo": "https://comicvine.gamespot.com/a/uploads/scale_small/5/57023/9905332-1000001866.jpg"
   },
   {
-    "name": "",
-    "age": 0,
-    "photo": "url"
+    "name": "Spider-Man",
+    "age": 23,
+    "photo": "https://comicvine.gamespot.com/a/uploads/scale_small/12/124259/9250872-ezgif-1-6914c30e6e.jpg"
   },
   {
-    "name": "",
-    "age": 0,
-    "photo": "url"
+    "name": "Thor",
+    "age": 45,
+    "photo": "https://comicvine.gamespot.com/a/uploads/scale_small/11184/111843102/9520871-thor.jpg"
   }
 ]
