@@ -70,3 +70,52 @@ tabContentItems.onclick = (event) => {
 }
 
 startAutoTabs()
+
+// ---------------------- home work number 5 ----------------------------------
+
+const inputSom = document.querySelector("#som")
+const inputUsd = document.querySelector("#usd")
+const inputEur = document.querySelector("#eur")
+
+const converter = (element, targetElement) => {
+  element.oninput = () => {
+    const xhr = new XMLHttpRequest()
+    xhr.open("GET", "../data/converter.json")
+    xhr.send()
+
+    xhr.onload = () => {
+      const data = JSON.parse(xhr.response)
+
+      const som = +inputSom.value
+      const usd = +inputUsd.value
+      const eur = +inputEur.value
+
+      if (element.id === "som") {
+        inputUsd.value = (som / data.usd).toFixed(2)
+        inputEur.value = (som / data.eur).toFixed(2)
+      }
+
+      if (element.id === "usd") {
+        inputSom.value = (usd * data.usd).toFixed(2)
+        inputEur.value = ((usd * data.usd) / data.eur).toFixed(2)
+      }
+
+      if (element.id === "eur") {
+        inputSom.value = (eur * data.eur).toFixed(2)
+        inputUsd.value = ((eur * data.eur) / data.usd).toFixed(2)
+      }
+      if (element.value === "") {
+        inputSom.value = ""
+        inputUsd.value = ""
+        inputEur.value = ""
+      }
+    }
+  }
+}
+
+converter(inputSom, inputUsd)
+converter(inputUsd, inputSom)
+converter(inputEur, inputSom)
+converter(inputSom, inputEur)
+converter(inputEur, inputUsd)
+converter(inputUsd, inputEur)
