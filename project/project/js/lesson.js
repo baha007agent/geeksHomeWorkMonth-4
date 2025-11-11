@@ -119,3 +119,51 @@ converter(inputEur, inputSom)
 converter(inputSom, inputEur)
 converter(inputEur, inputUsd)
 converter(inputUsd, inputEur)
+
+
+// --------------------- home work number 6.1 ----------------------------------------------
+
+const card = document.querySelector(".card")
+const btnNext = document.querySelector("#btn-next")
+const btnPrev = document.querySelector("#btn-prev")
+
+let indexData = 1
+
+const api = () => {
+  fetch(`https://jsonplaceholder.typicode.com/todos/${indexData}`)
+    .then((response) => response.json())
+    .then((data) => {
+      const { title, completed, id } = data
+      card.innerHTML = `
+      <p>${title}</p>
+      <p style="color: ${completed ? "green" : "red"}">
+       ${completed} 
+      </p>
+      <span>${id}</span>
+      `
+    })
+}
+
+api()
+
+btnNext.onclick = () => {
+  indexData++
+  if (indexData > 200) {
+    indexData = 1
+  }
+  api()
+}
+
+btnPrev.onclick = () => {
+  indexData--
+  if (indexData == 0) {
+    indexData = 200
+  }
+  api()
+}
+
+// --------------------- home work number 6.2 ----------------------------------------------
+
+fetch("https://jsonplaceholder.typicode.com/posts")
+  .then((response) => response.json())
+  .then((data) => console.log(data))
