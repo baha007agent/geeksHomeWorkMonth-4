@@ -77,39 +77,39 @@ const inputSom = document.querySelector("#som")
 const inputUsd = document.querySelector("#usd")
 const inputEur = document.querySelector("#eur")
 
-const converter = (element, targetElement) => {
-  element.oninput = () => {
-    const xhr = new XMLHttpRequest()
-    xhr.open("GET", "../data/converter.json")
-    xhr.send()
+const CONVERTER_API = "../data/converter.json"
 
-    xhr.onload = () => {
-      const data = JSON.parse(xhr.response)
+const converter = async (element) => {
+  try {
+    const response = await fetch(CONVERTER_API)
+    const data = await response.json()
 
-      const som = +inputSom.value
-      const usd = +inputUsd.value
-      const eur = +inputEur.value
+    const som = +inputSom.value
+    const usd = +inputUsd.value
+    const eur = +inputEur.value
 
-      if (element.id === "som") {
-        inputUsd.value = (som / data.usd).toFixed(2)
-        inputEur.value = (som / data.eur).toFixed(2)
-      }
-
-      if (element.id === "usd") {
-        inputSom.value = (usd * data.usd).toFixed(2)
-        inputEur.value = ((usd * data.usd) / data.eur).toFixed(2)
-      }
-
-      if (element.id === "eur") {
-        inputSom.value = (eur * data.eur).toFixed(2)
-        inputUsd.value = ((eur * data.eur) / data.usd).toFixed(2)
-      }
-      if (element.value === "") {
-        inputSom.value = ""
-        inputUsd.value = ""
-        inputEur.value = ""
-      }
+    if (element.id === "som") {
+      inputUsd.value = (som / data.usd).toFixed(2)
+      inputEur.value = (som / data.eur).toFixed(2)
     }
+
+    if (element.id === "usd") {
+      inputSom.value = (usd * data.usd).toFixed(2)
+      inputEur.value = ((usd * data.usd) / data.eur).toFixed(2)
+    }
+
+    if (element.id === "eur") {
+      inputSom.value = (eur * data.eur).toFixed(2)
+      inputUsd.value = ((eur * data.eur) / data.usd).toFixed(2)
+    }
+    if (element.value === "") {
+      inputSom.value = ""
+      inputUsd.value = ""
+      inputEur.value = ""
+    }
+  } catch (error) {
+    console.log("error");
+
   }
 }
 
@@ -129,19 +129,17 @@ const btnPrev = document.querySelector("#btn-prev")
 
 let indexData = 1
 
-const api = () => {
-  fetch(`https://jsonplaceholder.typicode.com/todos/${indexData}`)
-    .then((response) => response.json())
-    .then((data) => {
-      const { title, completed, id } = data
-      card.innerHTML = `
+const api = async () => {
+  const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${indexData}`)
+  const data = await response.json()
+  const { title, completed, id } = data
+  card.innerHTML = `
       <p>${title}</p>
       <p style="color: ${completed ? "green" : "red"}">
        ${completed} 
       </p>
       <span>${id}</span>
       `
-    })
 }
 
 api()
@@ -167,3 +165,41 @@ btnPrev.onclick = () => {
 fetch("https://jsonplaceholder.typicode.com/posts")
   .then((response) => response.json())
   .then((data) => console.log(data))
+
+
+// -----------------------
+
+const API_WEATHER = "https://api.openweathermap.org/data/2.5/weather"
+const API_WEATHER_KEY = "e417df62e04d3b1b111abeab19cea714"
+
+const searchCity = document.querySelector("#cityName")
+const searchCityBtn = document.querySelector("#search")
+
+const city = document.querySelector(".city")
+const temp = document.querySelector(".temp")
+
+
+searchCityBtn.onclick = async () => {
+  try {
+    if (searchCity.value !== "") {
+      const response = await fetch(`${API_WEATHER}?q=${searchCity.value}&units=metric&lang=ru&appid=${API_WEATHER_KEY}`)
+      const data = await response.json()
+      if (data.name) {
+        city.innerHTML = data.name
+        temp.innerHTML = Math.round(data.main.temp) + "&#8451"
+      } else {
+        city.innerHTML = "Город не найден"
+        city.style.color = "red"
+        temp.innerHTML = " "
+      }
+      searchCity.value = ""
+    } else {
+      console.log("ro");
+      city.innerHTML = "Введите название города..."
+      temp.innerHTML = " "
+      city.style.color = "red"
+    }
+  } catch (error) {
+    console.log("error");
+  }
+} 

@@ -1,0 +1,23 @@
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
+  background: #f4f1de;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #e07a5f;
+  border-radius: 20px;
+}
+
+.title-card {
+  padding-top: 20px;
+  text-align: center;
+  font-size: 27px;
+  color: #3d405b;
+}
